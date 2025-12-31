@@ -25,3 +25,8 @@ curl -X POST http://localhost:3000 \
 notes;
 -H -> stands for header content
 -d -> body content 
+
+the output of the project after I put into the terminal the second command;
+
+![HTTP Inspector Demo](Screenshot_20251231_214007.png)
+![HTTP Inspector Demo](im.png)
