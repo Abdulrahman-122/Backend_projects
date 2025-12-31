@@ -4,8 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js",
-    "test": "jest"
+    "start": "node --no-warnings main.js",      
+    "test": "jest" 
   },
   "author": "Abdulrahman Qasim",
   "license": "ISC",

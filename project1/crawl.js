@@ -70,28 +70,49 @@
 // module.exports={     
 //     // normalizeURL
 //   geturlfromHtml
+// // }
+// const { JSDOM } = require('jsdom');
+
+// function geturlfromHtml(HTML, BaseURL) {
+//     const urls = [];
+//     const dom = new JSDOM(HTML);
+//     const linkElements = dom.window.document.querySelectorAll('a');
+
+//     for (const link of linkElements) {
+//         const href = link.getAttribute('href'); // Use getAttribute to get the raw string
+//         if (href) {
+//             try {
+//                 // The URL constructor automatically handles both absolute 
+//                 // and relative URLs if you provide the BaseURL as the second argument.
+//                 const urlobj = new URL(href, BaseURL);
+//                 urls.push(urlobj.href);
+//             } catch (err) {
+//                 console.log(`Error with URL ${href}: ${err.message}`);
+//             }
+//         }
+//     }
+//     return urls;
 // }
-const { JSDOM } = require('jsdom');
 
-function geturlfromHtml(HTML, BaseURL) {
-    const urls = [];
-    const dom = new JSDOM(HTML);
-    const linkElements = dom.window.document.querySelectorAll('a');
+// module.exports = { geturlfromHtml };
 
-    for (const link of linkElements) {
-        const href = link.getAttribute('href'); // Use getAttribute to get the raw string
-        if (href) {
-            try {
-                // The URL constructor automatically handles both absolute 
-                // and relative URLs if you provide the BaseURL as the second argument.
-                const urlobj = new URL(href, BaseURL);
-                urls.push(urlobj.href);
-            } catch (err) {
-                console.log(`Error with URL ${href}: ${err.message}`);
-            }
-        }
+async function crawl_page(current_URL){
+    console.log(`actively crawling URL:${current_URL}`)
+
+    try{
+    const obj=await fetch(current_URL)
+    
+    if (obj.status>399){
+        console.log(`error in fetch with status code:${obj.status} on page ${current_URL}`)}
+     
+    const contenttype=obj.headers.get("content-type")
+    if(!contenttype.includes('text/html')){
+        console.log(`Non Html response,contenttype ${contenttype} on page ${current_URL}`)
     }
-    return urls;
+    console.log(await obj.text()) 
+     }
+    catch(err){ 
+        console.log(`There's an error in this path try again ${err.message} on page ${current_URL}`)
+    }
 }
-
-module.exports = { geturlfromHtml };
+module.exports={crawl_page};
